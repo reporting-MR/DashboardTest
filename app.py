@@ -25,7 +25,8 @@ st.set_page_config(page_title="SunPower Overview Dash",page_icon="🌍",layout="
 st.dataframe(data)
 
 # Metrics
-st.subheader("Metrics")
+st.markdown("<h1 style='text-align: center; color: red;'>Metrics</h1>", unsafe_allow_html=True)
+#st.subheader("Metrics")
 
 # Number of Impressions, Clicks, and Conversions
 impressions = data['Impressions'].sum()
