@@ -50,7 +50,7 @@ col6.metric(label = "CPC", value = round(cpc,2))
 
 
 # Pie chart showing Conversions by Campaign
-fig_pie = px.pie(data, names='Channel_Non_Truth', values='Cost', title='Conversions by Campaign')
+fig_pie = px.pie(data, names='State_Name', values='Cost', title='Cost by State')
 fig_pie.update_traces(textposition='inside')
 st.plotly_chart(fig_pie, use_container_width=True)
 
