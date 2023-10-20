@@ -46,7 +46,7 @@ st.write(label = "CPC", value = cpc)
 st.subheader("Charts")
 
 # Pie chart showing Conversions by Campaign
-fig_pie = px.pie(data, names='Channel_Non_Truth', values='Conversions', title='Conversions by Campaign')
+fig_pie = px.pie(data, names='Channel_Non_Truth', values='Cost', title='Conversions by Campaign')
 fig_pie.update_traces(textposition='inside')
 st.plotly_chart(fig_pie, use_container_width=True)
 
