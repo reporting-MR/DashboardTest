@@ -21,8 +21,7 @@ data = pandas.read_gbq(query, credentials=credentials)
 
 
 # Collapsible data frame
-with st.beta_expander("Data Frame"):
-    st.dataframe(data)
+st.dataframe(data)
 
 # Metrics
 st.subheader("Metrics")
