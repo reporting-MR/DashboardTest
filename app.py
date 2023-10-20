@@ -48,7 +48,7 @@ cvr = conversions / clicks
 cpc = data['Cost'].sum() / conversions
 
 col4, col5, col6 = st.columns(3)
-col4.metric(label = "CTR", value = ctr)
+col4.metric(label = "CTR", value = "{}%".format(round(ctr*100, 2))
 col5.metric(label = "CVR", value = cvr)
 col6.metric(label = "CPC", value = round(cpc,2))
 
