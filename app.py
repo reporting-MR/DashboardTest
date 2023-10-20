@@ -37,7 +37,7 @@ st.write(f"Total Conversions: {conversions}")
 # Additional metrics
 ctr = clicks / impressions
 cvr = conversions / clicks
-cpc = data['Costs'].sum() / conversions
+cpc = data['Cost'].sum() / conversions
 st.write(f"CTR: {ctr:.2%}")
 st.write(f"CVR: {cvr:.2%}")
 st.write(f"CPC: ${cpc:.2f}")
