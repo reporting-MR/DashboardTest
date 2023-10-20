@@ -16,7 +16,7 @@ client = bigquery.Client(credentials=credentials)
 # Perform query.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
 
-query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date = "2023-10-17"'''
+query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date = "2023-10-19"'''
 data = pandas.read_gbq(query, credentials=credentials)
 
 
@@ -30,23 +30,24 @@ st.subheader("Metrics")
 impressions = data['Impressions'].sum()
 clicks = data['Clicks'].sum()
 conversions = data['Conversions'].sum()
-st.write(f"Total Impressions: {impressions}")
-st.write(f"Total Clicks: {clicks}")
-st.write(f"Total Conversions: {conversions}")
+st.metric(label = "Total Impressions", value = impresssions)
+st.write(label = "Total Clicks", value = clicks)
+st.write(label = "Total Conversions", value = conversions)
 
 # Additional metrics
 ctr = clicks / impressions
 cvr = conversions / clicks
 cpc = data['Cost'].sum() / conversions
-st.write(f"CTR: {ctr:.2%}")
-st.write(f"CVR: {cvr:.2%}")
-st.write(f"CPC: ${cpc:.2f}")
+st.metric(label = "CTR", value = ctr)
+st.write(label = "CVR", value = cvr)
+st.write(label = "CPC", value = cpc)
 
 # Charts
 st.subheader("Charts")
 
 # Pie chart showing Conversions by Campaign
-fig_pie = px.pie(data, names='Campaign', values='Conversions', title='Conversions by Campaign')
+fig_pie = px.pie(data, names='Channel_Non_Truth', values='Conversions', title='Conversions by Campaign')
+fig.update_traces(textposition='inside')
 st.plotly_chart(fig_pie, use_container_width=True)
 
 # Scatter plot showing Conversions as a function of cost with a regression line
