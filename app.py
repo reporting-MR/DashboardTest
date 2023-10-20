@@ -23,7 +23,7 @@ data = pandas.read_gbq(query, credentials=credentials)
 
 st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
 
-st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - Oct. 19th</h1>", unsafe_allow_html=True)
 
 # Collapsible data frame
 st.dataframe(data)
@@ -49,8 +49,8 @@ cpc = data['Cost'].sum() / conversions
 
 col4, col5, col6 = st.columns(3)
 col4.metric(label = "CTR", value = "{}%".format(round(ctr*100, 2)))
-col5.metric(label = "CVR", value = cvr)
-col6.metric(label = "CPC", value = round(cpc,2))
+col5.metric(label = "CVR", value = "{}%".format(round(cvr*100, 2)))
+col6.metric(label = "CPC", value = "{}$".format(round(cpc, 2)))
 
 # Pie chart showing Conversions by Campaign
 fig_pie = px.pie(data, names='State_Name', values='Cost', title='Cost by State')
