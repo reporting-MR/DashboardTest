@@ -53,7 +53,7 @@ col6.metric(label = "CPC", value = round(cpc,2))
 fig = make_subplots(rows=1, cols=2)
 
 fig.add_trace(
-    go.Pie(data, names='State_Name', values='Cost', title='Cost by State'),
+    go.Pie(names=data['State_Name'], values=data['Cost'], title='Cost by State'),
     row=1, col=1
 )
 
