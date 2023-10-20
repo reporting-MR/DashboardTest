@@ -46,7 +46,7 @@ cpc = data['Cost'].sum() / conversions
 col4, col5, col6 = st.columns(3)
 col4.metric(label = "CTR", value = ctr)
 col5.metric(label = "CVR", value = cvr)
-col6.metric(label = "CPC", value = cpc)
+col6.metric(label = "CPC", value = round(cpc,2))
 
 
 # Pie chart showing Conversions by Campaign
