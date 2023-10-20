@@ -25,7 +25,7 @@ st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",l
 st.dataframe(data)
 
 # Metrics
-st.markdown("<h1 style='text-align: center; color: red;'>Metrics</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: black;'>Metrics</h1>", unsafe_allow_html=True)
 #st.subheader("Metrics")
 
 # Number of Impressions, Clicks, and Conversions
@@ -55,5 +55,5 @@ fig_pie.update_traces(textposition='inside')
 st.plotly_chart(fig_pie, use_container_width=True)
 
 # Scatter plot showing Conversions as a function of cost with a regression line
-fig_scatter = px.scatter(data, x='Costs', y='Conversions', trendline='ols', title='Conversions vs Cost')
+fig_scatter = px.scatter(data, x ='Cost', y='Conversions', trendline='ols', title='Conversions vs Cost')
 st.plotly_chart(fig_scatter, use_container_width=True)
