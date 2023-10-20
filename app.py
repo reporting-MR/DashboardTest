@@ -30,20 +30,22 @@ st.subheader("Metrics")
 impressions = data['Impressions'].sum()
 clicks = data['Clicks'].sum()
 conversions = data['Conversions'].sum()
-st.metric(label = "Total Impressions", value = impressions)
-st.write(label = "Total Clicks", value = clicks)
-st.write(label = "Total Conversions", value = conversions)
+
+col1, col2, col3 = st.columns(3)
+col1.metric(label = "Total Impressions", value = impressions)
+col2.metric(label = "Total Clicks", value = clicks)
+col3.metric(label = "Total Conversions", value = conversions)
 
 # Additional metrics
 ctr = clicks / impressions
 cvr = conversions / clicks
 cpc = data['Cost'].sum() / conversions
-st.metric(label = "CTR", value = ctr)
-st.write(label = "CVR", value = cvr)
-st.write(label = "CPC", value = cpc)
 
-# Charts
-st.subheader("Charts")
+col4, col5, col6 = st.columns(3)
+col4.metric(label = "CTR", value = ctr)
+col5.metric(label = "CVR", value = cvr)
+col6.metric(label = "CPC", value = cpc)
+
 
 # Pie chart showing Conversions by Campaign
 fig_pie = px.pie(data, names='Channel_Non_Truth', values='Cost', title='Conversions by Campaign')
