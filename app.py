@@ -23,11 +23,13 @@ data = pandas.read_gbq(query, credentials=credentials)
 
 st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
 
+st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash</h1>", unsafe_allow_html=True)
+
 # Collapsible data frame
 st.dataframe(data)
 
 # Metrics
-st.markdown("<h1 style='text-align: center; color: black;'>Metrics</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: black;'>Metrics</h2>", unsafe_allow_html=True)
 #st.subheader("Metrics")
 
 # Number of Impressions, Clicks, and Conversions
