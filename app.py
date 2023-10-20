@@ -19,6 +19,7 @@ client = bigquery.Client(credentials=credentials)
 query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date = "2023-10-19"'''
 data = pandas.read_gbq(query, credentials=credentials)
 
+st.set_page_config(page_title="SunPower Overview Dash",page_icon="🌍",layout="wide")
 
 # Collapsible data frame
 st.dataframe(data)
