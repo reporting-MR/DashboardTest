@@ -34,7 +34,7 @@ clicks = data['Clicks'].sum()
 conversions = data['Conversions'].sum()
 
 col1, col2, col3 = st.columns(3)
-col1.metric(label = "Total Impressions", value = impressions)
+col1.metric(label = "Total Impressions", value = round(impressions*100,2)+ "%")
 col2.metric(label = "Total Clicks", value = clicks)
 col3.metric(label = "Total Conversions", value = conversions)
 
