@@ -47,7 +47,7 @@ st.subheader("Charts")
 
 # Pie chart showing Conversions by Campaign
 fig_pie = px.pie(data, names='Channel_Non_Truth', values='Conversions', title='Conversions by Campaign')
-fig.update_traces(textposition='inside')
+fig_pie.update_traces(textposition='inside')
 st.plotly_chart(fig_pie, use_container_width=True)
 
 # Scatter plot showing Conversions as a function of cost with a regression line
