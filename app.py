@@ -30,7 +30,7 @@ st.subheader("Metrics")
 impressions = data['Impressions'].sum()
 clicks = data['Clicks'].sum()
 conversions = data['Conversions'].sum()
-st.metric(label = "Total Impressions", value = impresssions)
+st.metric(label = "Total Impressions", value = impressions)
 st.write(label = "Total Clicks", value = clicks)
 st.write(label = "Total Conversions", value = conversions)
 
