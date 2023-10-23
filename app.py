@@ -44,7 +44,7 @@ col3.metric(label = "Total Conversions", value = conversions)
 
 # Additional metrics
 ctr = clicks / impressions
-cvr = conversions / clicks
+cvr = conversions / impressions
 cpc = data['Cost'].sum() / conversions
 
 col4, col5, col6 = st.columns(3)
