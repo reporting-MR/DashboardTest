@@ -23,7 +23,7 @@ data = pandas.read_gbq(query, credentials=credentials)
 
 st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
 
-st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - Oct. 19th</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - Oct. 23rd</h1>", unsafe_allow_html=True)
 
 # Collapsible data frame
 st.dataframe(data)
