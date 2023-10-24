@@ -53,11 +53,15 @@ col4.metric(label = "CTR", value = "{}%".format(round(ctr*100, 2)))
 col5.metric(label = "CVR", value = "{}%".format(round(cvr*100, 2)))
 col6.metric(label = "CPC", value = "{}$".format(round(cpc, 2)))
 
-# Pie chart showing Conversions by Campaign
-fig_pie = px.pie(data, names='State_Name', values='Cost', title='Cost by State')
-fig_pie.update_traces(textposition='inside')
-st.plotly_chart(fig_pie, use_container_width=True)
+bottom_left_column, bottom_right_column = st.columns(2)
 
-# Scatter plot showing Conversions as a function of cost with a regression line
-fig_scatter = px.scatter(data, x ='Cost', y='Conversions', trendline='ols', title='Conversions vs Cost')
-st.plotly_chart(fig_scatter, use_container_width=True)
+with bottom_left_column:
+    # Pie chart showing Conversions by Campaign
+    fig_pie = px.pie(data, names='State_Name', values='Cost', title='Cost by State')
+    fig_pie.update_traces(textposition='inside')
+    st.plotly_chart(fig_pie, use_container_width=True)
+
+with bottom_right_column:
+    # Scatter plot showing Conversions as a function of cost with a regression line
+    fig_scatter = px.scatter(data, x ='Cost', y='Conversions', trendline='ols', title='Conversions vs Cost')
+    st.plotly_chart(fig_scatter, use_container_width=True)
