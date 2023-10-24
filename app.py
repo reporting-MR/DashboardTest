@@ -26,7 +26,8 @@ st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",l
 st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - Oct. 23rd</h1>", unsafe_allow_html=True)
 
 # Collapsible data frame
-st.dataframe(data)
+with st.expander("Data Preview"):
+    st.dataframe(data)
 
 # Metrics
 st.markdown("<h2 style='text-align: center; color: black;'>Metrics</h2>", unsafe_allow_html=True)
