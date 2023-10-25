@@ -200,6 +200,6 @@ fig = go.Figure(data=[trace_forecast, trace_lower, trace_upper])
 fig.update_layout(title='Prophet Forecast of Appointments w/ Confidence Interval', xaxis_title='Date', yaxis_title='Forecasted Appts')
 
 # Display the Plotly chart in Streamlit
-st.plotly_chart(fig)
+st.plotly_chart(fig, use_container_width=True)
 
 #st.plot(model.plot(forecast), use_container_width=True)
