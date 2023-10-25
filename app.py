@@ -188,7 +188,18 @@ model.fit(daily_aggregated)
 future = model.make_future_dataframe(periods=120)  # Forecast for 120 days into the future
 forecast = model.predict(future)
 
-fig_proph = px.line(forecast, x='ds', y='yhat', title='Prophet Forecast')
-st.plotly_chart(fig_proph, use_container_width=True)
+# Create Plotly traces for the forecasted values, lower, and upper bounds
+trace_forecast = go.Scatter(x=forecast['ds'], y=forecast['yhat'], mode='lines', name='Forecast')
+trace_lower = go.Scatter(x=forecast['ds'], y=forecast['yhat_lower'], fill='tonexty', mode='none', name='Lower Bound')
+trace_upper = go.Scatter(x=forecast['ds'], y=forecast['yhat_upper'], fill='tonexty', mode='none', name='Upper Bound')
+
+# Create a Plotly figure
+fig = go.Figure(data=[trace_forecast, trace_lower, trace_upper])
+
+# Customize the layout
+fig.update_layout(title='Prophet Forecast of Appointments w/ Confidence Interval', xaxis_title='Date', yaxis_title='Forecasted Appts')
+
+# Display the Plotly chart in Streamlit
+st.plotly_chart(fig)
 
 #st.plot(model.plot(forecast))
