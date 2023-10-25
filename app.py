@@ -65,3 +65,9 @@ with bottom_right_column:
     # Scatter plot showing Conversions as a function of cost with a regression line
     fig_scatter = px.scatter(data, x ='Cost', y='Conversions', trendline='ols', title='Conversions vs Cost')
     st.plotly_chart(fig_scatter, use_container_width=True)
+
+
+daily_clicks = data.groupby(data['Date'].dt.date)['Clicks'].sum().reset_index()
+
+st.write(daily_clicks)
+
