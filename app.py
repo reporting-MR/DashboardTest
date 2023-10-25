@@ -37,8 +37,6 @@ with st.expander("Data Preview"):
 st.markdown("<h2 style='text-align: center; color: black;'>Metrics</h2>", unsafe_allow_html=True)
 #st.subheader("Metrics")
 
-st.write(data.dtypes)
-
 # Number of Impressions, Clicks, and Conversions
 impressions = data['Impressions'].sum()
 clicks = data['Clicks'].sum()
