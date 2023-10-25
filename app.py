@@ -175,4 +175,9 @@ with bottom_right_column:
 query2 = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel`'''
 data2 = pandas.read_gbq(query2, credentials=credentials)
 
-st.write(data2)
+data2['Date'] = pd.to_datetime(data2['Date'])
+
+# Group by date and sum 'Appointments' to get 'y'
+data2['Appts'] = pd.to_numeric(data2['Appts'], errors='coerce').fillna(0).astype(int)
+daily_aggregated = data2.groupby(data2['Date'].dt.date)['Appts'].sum().reset_index()
+daily_aggregated.columns = ['ds', 'y']  # Rename columns
