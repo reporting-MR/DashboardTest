@@ -53,18 +53,21 @@ cpc = data['Cost'].sum() / conversions
 
 col1, col2, col3 = st.columns(3)
 with col1:
+    st.header("Clicks, Impressions, and CTR")
     col11, col12, col13 = st.columns(3)
     col11.metric(label = "Total Impressions", value = impressions)
     col12.metric(label = "Total Clicks", value = clicks)
     col13.metric(label = "CTR", value = "{}%".format(round(ctr*100, 2)))
 
 with col2:
+    st.header("Leads, DQs, and CPL")
     col21, col22, col23 = st.columns(3)
     col21.metric(label = "Leads", value = leads)
     col22.metric(label = "DQs", value = DQs)
     col23.metric(label = "CPL", value = "{}$".format(round(CPL, 2)))
 
 with col3:
+    st.header("Appointments, CPA, and Conversion Rate")
     col31, col32, col33 = st.columns(3)
     col31.metric(label = "Placeholder", value = clicks)
     col32.metric(label = "Placeholder", value = clicks)
