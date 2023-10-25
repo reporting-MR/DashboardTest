@@ -33,7 +33,6 @@ st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Das
 with st.expander("Data Preview"):
     st.dataframe(data)
 
-st.write(data.dtypes)
 
 #### Metrics ####
 st.markdown("<h2 style='text-align: center; color: black;'>Metrics</h2>", unsafe_allow_html=True)
@@ -47,6 +46,7 @@ cost = data['Cost'].sum()
 leads = data['Number_of_reports__Salesforce_Reports'].sum()
 DQs = data['DQ'].sum()
 CPL = cost/leads
+data['Appts'] = pd.to_numeric(data['Appts'], errors='coerce').fillna(0).astype(int)
 Appointments = data['Appts'].sum()
 
 # Additional metrics
