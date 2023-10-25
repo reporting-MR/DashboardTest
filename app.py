@@ -170,3 +170,9 @@ with bottom_right_column:
     fig_scatter = px.scatter(data, x ='Cost', y='Conversions', trendline='ols', title='Conversions vs Cost')
     st.plotly_chart(fig_scatter, use_container_width=True)
 
+
+
+query2 = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel`'''
+data2 = pandas.read_gbq(query2, credentials=credentials)
+
+st.write(data2)
