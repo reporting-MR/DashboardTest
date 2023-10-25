@@ -83,14 +83,16 @@ daily_data['CTR'] = daily_data['Clicks'] / daily_data['Impressions']
 
 numerical_columns = data.select_dtypes(include=['number']).columns
 daily_sums = data.groupby(data['Date'].dt.date)[numerical_columns].sum()
-st.write(daily_sums)
+daily_sums['CTR'] = daily_sums['Clicks'] / daily_sums['Impressions']
 
+st.write(daily_sums)
+st.write(daily_data)
 
 # Create the figure
 fig = go.Figure()
 # Add a line trace for daily click sums
-fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['Clicks'], mode='lines', name='Daily Clicks', yaxis='y'))
-fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['CTR'], mode='lines', name='CTR', yaxis='y2'))
+fig.add_trace(go.Scatter(x=daily_sums['Date'], y=daily_sums['Clicks'], mode='lines', name='Daily Clicks', yaxis='y'))
+fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_sums['CTR'], mode='lines', name='CTR', yaxis='y2'))
 fig.update_layout(
     title='Daily Clicks and CTR',
     xaxis_title='Date',
