@@ -67,7 +67,7 @@ with col2:
     col23.metric(label = "CPL", value = "{}$".format(round(CPL, 2)))
 
 with col3:
-    st.header("Appointments, CPA, and Conversion Rate")
+    st.header("Appts, CPA, and Conversion Rate")
     col31, col32, col33 = st.columns(3)
     col31.metric(label = "Placeholder", value = clicks)
     col32.metric(label = "Placeholder", value = clicks)
