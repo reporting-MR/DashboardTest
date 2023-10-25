@@ -18,7 +18,7 @@ client = bigquery.Client(credentials=credentials)
 # Perform query.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
 
-query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date = "2023-10-23"'''
+query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE MONTH(Date) = 10'''
 data = pandas.read_gbq(query, credentials=credentials)
 
 st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
