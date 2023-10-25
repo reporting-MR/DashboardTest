@@ -90,6 +90,7 @@ daily_sums = data.groupby(data['Date'].dt.date)[numerical_columns].sum()
 daily_sums = daily_sums.reset_index()
 daily_sums['CTR'] = daily_sums['Clicks'] / daily_sums['Impressions']
 daily_sums['CPL'] = daily_sums['Cost'] / daily_sums['Number_of_reports__Salesforce_Reports']
+daily_sums['CPA'] = daily_sums['Appts'] / daily_sums['Cost']
 
 ####Line Chart for Clicks and CTR
 fig = go.Figure()
@@ -124,7 +125,25 @@ fig2.update_layout(
         rangemode='tozero'  # Sets the secondary y-axis to start from 0
     )
 )
-   
+
+#### Line Chart for Appts and CPA
+fig3 = go.Figure()
+# Add a line trace for daily click sums
+fig3.add_trace(go.Scatter(x=daily_sums['Date'], y=daily_sums['Appts'], mode='lines', name='Daily Appts', yaxis='y', line = dict(color="Purple")))
+fig3.add_trace(go.Scatter(x=daily_sums['Date'], y=daily_sums['CPA'], mode='lines', name='CPA', yaxis='y2', line=dict(color = 'Green')))
+fig3.update_layout(
+    title='Daily Appts and CPA',
+    xaxis_title='Date',
+    yaxis_title='Leads',
+    yaxis2=dict(
+        title='CPL ($)',
+        overlaying='y',
+        side='right',
+        rangemode='tozero'  # Sets the secondary y-axis to start from 0
+    )
+)
+
+
 with col4:
     st.plotly_chart(fig, use_container_width=True)
 
