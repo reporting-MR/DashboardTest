@@ -189,6 +189,6 @@ future = model.make_future_dataframe(periods=120)  # Forecast for 120 days into 
 forecast = model.predict(future)
 
 fig_proph = px.line(forecast, x='ds', y='yhat', title='Prophet Forecast')
-st.plotly_chart(fig_proph, , use_container_width=True)
+st.plotly_chart(fig_proph, use_container_width=True)
 
 #st.plot(model.plot(forecast))
