@@ -81,5 +81,5 @@ fig.update_layout(
     xaxis_title='Date',
     yaxis_title='Clicks',
 )
-fig.show()
+st.plotly_chart(fig, use_container_width=True)
 
