@@ -151,7 +151,7 @@ with col5:
     st.plotly_chart(fig2, use_container_width=True)
 
 with col6:
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig3, use_container_width=True)
 
 
 ### Bottom Charts ###
