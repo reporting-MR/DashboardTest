@@ -8,6 +8,7 @@ from google.oauth2 import service_account
 from google.cloud import bigquery
 import statsmodels.api as sm
 from plotly.subplots import make_subplots
+from fbprophet import Prophet
 
 
 
