@@ -80,7 +80,6 @@ daily_data = data.groupby(data['Date'].dt.date)['Clicks'].sum().reset_index()
 daily_impressions = data.groupby(data['Date'].dt.date)['Impressions'].sum().reset_index()
 daily_data['Impressions'] = daily_impressions['Impressions']
 daily_data['CTR'] = daily_data['Clicks'] / daily_data['Impressions']
-st.write(daily_data)
 
 # Create the figure
 fig = go.Figure()
