@@ -69,7 +69,9 @@ with bottom_right_column:
 #Trying to get daily clicks
 data['Date'] = pd.to_datetime(data['Date'])
 daily_clicks = data.groupby(data['Date'].dt.date)['Clicks'].sum().reset_index()
-#st.write(daily_clicks)
+daily_clicks['Impressions'] = data.groupby(data['Date'].dt.date)['Impressions'].sum().reset_index()
+daily_clicks['CTR'] = daily_clicks['Clicks'] / daily_clicks['Impressions']
+st.write(daily_clicks)
 
 # Create the figure
 fig = go.Figure()
