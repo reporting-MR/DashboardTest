@@ -86,9 +86,6 @@ daily_sums = daily_sums.reset_index()
 daily_sums['CTR'] = daily_sums['Clicks'] / daily_sums['Impressions']
 daily_sums['CPL'] = daily_sums['Cost'] / daily_sums['Number_of_reports__Salesforce_Reports']
 
-st.write(daily_sums)
-st.write(daily_data)
-
 ####Line Chart for Clicks and CTR
 fig = go.Figure()
 # Add a line trace for daily click sums
