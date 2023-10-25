@@ -71,14 +71,14 @@ data['Date'] = pd.to_datetime(data['Date'])
 daily_data = data.groupby(data['Date'].dt.date)['Clicks'].sum().reset_index()
 daily_impressions = data.groupby(data['Date'].dt.date)['Impressions'].sum().reset_index()
 daily_data['Impressions'] = daily_impressions['Impressions']
-daily_data['CTR'] = daily_clicks['Clicks'] / daily_clicks['Impressions']
-st.write(daily_clicks)
+daily_data['CTR'] = daily_data['Clicks'] / daily_data['Impressions']
+st.write(daily_data)
 
 # Create the figure
 fig = go.Figure()
 
 # Add a line trace for daily click sums
-fig.add_trace(go.Scatter(x=daily_clicks['Date'], y=daily_clicks['Clicks'], mode='lines', name='Daily Clicks'))
+fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['Clicks'], mode='lines', name='Daily Clicks'))
 fig.update_layout(
     title='Daily Click Sums',
     xaxis_title='Date',
