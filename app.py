@@ -69,5 +69,17 @@ with bottom_right_column:
 #Trying to get daily clicks
 data['Date'] = pd.to_datetime(data['Date'])
 daily_clicks = data.groupby(data['Date'].dt.date)['Clicks'].sum().reset_index()
-st.write(daily_clicks)
+#st.write(daily_clicks)
+
+# Create the figure
+fig = go.Figure()
+
+# Add a line trace for daily click sums
+fig.add_trace(go.Scatter(x=daily_clicks['Date'], y=daily_clicks['Clicks'], mode='lines', name='Daily Clicks'))
+fig.update_layout(
+    title='Daily Click Sums',
+    xaxis_title='Date',
+    yaxis_title='Clicks',
+)
+fig.show()
 
