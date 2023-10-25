@@ -62,21 +62,21 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.write("Clicks, Impressions, and CTR")
     col11, col12, col13 = st.columns(3)
-    col11.metric(label = "Total Impressions", value = impressions)
-    col12.metric(label = "Total Clicks", value = clicks)
+    col11.metric(label = "Total Impressions", value = '{:,}'.format(impressions))
+    col12.metric(label = "Total Clicks", value = '{:,}'.format(clicks))
     col13.metric(label = "CTR", value = "{}%".format(round(ctr*100, 2)))
 
 with col2:
     st.write("Leads, DQs, and CPL")
     col21, col22, col23 = st.columns(3)
-    col21.metric(label = "Leads", value = leads)
-    col22.metric(label = "DQs", value = round(DQs))
+    col21.metric(label = "Leads", value = '{:,}'.format(leads))
+    col22.metric(label = "DQs", value = '{:,}'.format(round(DQs)))
     col23.metric(label = "CPL", value = "{}$".format(round(CPL, 2)))
 
 with col3:
     st.write("Appts, L2A, and CPA")
     col31, col32, col33 = st.columns(3)
-    col31.metric(label = "Appointments", value = Appointments)
+    col31.metric(label = "Appointments", value = '{:,}'.format(Appointments))
     col32.metric(label = "L2A", value = "{}%".format(round(L2A*100, 2)))
     col33.metric(label = "CPA", value = "{}$".format(round(cpa, 2)))
 
