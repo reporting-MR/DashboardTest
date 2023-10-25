@@ -71,15 +71,19 @@ with col3:
     col33.metric(label = "Placeholder", value = clicks)
 
 ##### Line Charts Under Metrics #####
-
 col4, col5, col6 = st.columns(3)
 
+####Line Chart for Clicks and CTR
 #Trying to get daily clicks
 data['Date'] = pd.to_datetime(data['Date'])
 daily_data = data.groupby(data['Date'].dt.date)['Clicks'].sum().reset_index()
 daily_impressions = data.groupby(data['Date'].dt.date)['Impressions'].sum().reset_index()
 daily_data['Impressions'] = daily_impressions['Impressions']
 daily_data['CTR'] = daily_data['Clicks'] / daily_data['Impressions']
+
+daily_data = data.groupby(data['Date'].dt.date).sum()
+st.write(daily_data)
+
 
 # Create the figure
 fig = go.Figure()
@@ -97,6 +101,8 @@ fig.update_layout(
         rangemode='tozero'  # Sets the secondary y-axis to start from 0
     )
 )
+
+#### Line Chart for Leads and CPL
 with col4:
     st.plotly_chart(fig, use_container_width=True)
 
