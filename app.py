@@ -10,6 +10,7 @@ import statsmodels.api as sm
 from plotly.subplots import make_subplots
 
 
+
 ##### Getting the Data #####
 # Create API client.
 credentials = service_account.Credentials.from_service_account_info(
