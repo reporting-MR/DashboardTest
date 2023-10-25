@@ -53,18 +53,25 @@ ctr = clicks / impressions
 cvr = conversions / impressions
 cpc = data['Cost'].sum() / conversions
 
-col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
-col1.metric(label = "Total Impressions", value = impressions)
-col2.metric(label = "Total Clicks", value = clicks)
-col3.metric(label = "CTR", value = "{}%".format(round(ctr*100, 2)))
+col1, col2, col3 = st.columns(3)
 
-col4.metric(label = "Leads", value = leads)
-col5.metric(label = "DQs", value = DQs)
-col6.metric(label = "CPL", value = "{}$".format(round(CPL, 2)))
+with col1:
+    col11, col12, col13 = st.columns(3)
+    col11.metric(label = "Total Impressions", value = impressions)
+    col12.metric(label = "Total Clicks", value = clicks)
+    col13.metric(label = "CTR", value = "{}%".format(round(ctr*100, 2)))
 
-col7.metric(label = "Placeholder", value = clicks)
-col8.metric(label = "Placeholder", value = clicks)
-col9.metric(label = "Placeholder", value = clicks)
+with col2:
+    col21, col22, col23 = st.columns(3)
+    col21.metric(label = "Leads", value = leads)
+    col22.metric(label = "DQs", value = DQs)
+    col23.metric(label = "CPL", value = "{}$".format(round(CPL, 2)))
+
+with col3:
+    col31, col32, col33 = st.columns(3)
+    col31.metric(label = "Placeholder", value = clicks)
+    col32.metric(label = "Placeholder", value = clicks)
+    col33.metric(label = "Placeholder", value = clicks)
 
 bottom_left_column, bottom_right_column = st.columns(2)
 
