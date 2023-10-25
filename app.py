@@ -68,7 +68,7 @@ with col2:
     st.write("Leads, DQs, and CPL")
     col21, col22, col23 = st.columns(3)
     col21.metric(label = "Leads", value = leads)
-    col22.metric(label = "DQs", value = DQs)
+    col22.metric(label = "DQs", value = round(DQs))
     col23.metric(label = "CPL", value = "{}$".format(round(CPL, 2)))
 
 with col3:
