@@ -44,8 +44,7 @@ impressions = data['Impressions'].sum()
 clicks = data['Clicks'].sum()
 conversions = data['Conversions'].sum()
 cost = data['Cost'].sum()
-filtered_data = data[data['DQ'] < 1]
-leads = filtered_data['Number_of_reports__Salesforce_Reports'].sum()
+leads = (data['Number_of_reports__Salesforce_Reports'] - data['DQ'].sum()
 DQs = data['DQ'].sum()
 CPL = cost/leads
 
