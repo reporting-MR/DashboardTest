@@ -45,11 +45,14 @@ cost = data['Cost'].sum()
 leads = data['Number_of_reports__Salesforce_Reports'].sum()
 DQs = data['DQ'].sum()
 CPL = cost/leads
+Appointments = data['Appts'].sum()
 
 # Additional metrics
 ctr = clicks / impressions
 cvr = conversions / impressions
-cpc = data['Cost'].sum() / conversions
+cpc = cost / conversions
+cpa = cost / Appointments
+L2A = Appointments / leads
 
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -67,11 +70,11 @@ with col2:
     col23.metric(label = "CPL", value = "{}$".format(round(CPL, 2)))
 
 with col3:
-    st.write("Appts, CPA, and Conversion Rate")
+    st.write("Appts, L2A, and CPA")
     col31, col32, col33 = st.columns(3)
-    col31.metric(label = "Placeholder", value = clicks)
-    col32.metric(label = "Placeholder", value = clicks)
-    col33.metric(label = "Placeholder", value = clicks)
+    col31.metric(label = "Appointments", value = Appointments)
+    col32.metric(label = "L2A", value = L2A)
+    col33.metric(label = "CPA", value = cpa)
 
 ##### Line Charts Under Metrics #####
 col4, col5, col6 = st.columns(3)
