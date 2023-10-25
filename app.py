@@ -9,6 +9,8 @@ from google.cloud import bigquery
 import statsmodels.api as sm
 from plotly.subplots import make_subplots
 
+
+##### Getting the Data #####
 # Create API client.
 credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"]
@@ -23,13 +25,15 @@ data = pandas.read_gbq(query, credentials=credentials)
 
 st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
 
-st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - Oct. 23rd</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - October</h1>", unsafe_allow_html=True)
 
+
+##### Displaying the dashboard #####
 # Collapsible data frame
 with st.expander("Data Preview"):
     st.dataframe(data)
 
-# Metrics
+#### Metrics ####
 st.markdown("<h2 style='text-align: center; color: black;'>Metrics</h2>", unsafe_allow_html=True)
 #st.subheader("Metrics")
 
@@ -37,21 +41,29 @@ st.markdown("<h2 style='text-align: center; color: black;'>Metrics</h2>", unsafe
 impressions = data['Impressions'].sum()
 clicks = data['Clicks'].sum()
 conversions = data['Conversions'].sum()
-
-col1, col2, col3 = st.columns(3)
-col1.metric(label = "Total Impressions", value = impressions)
-col2.metric(label = "Total Clicks", value = clicks)
-col3.metric(label = "Total Conversions", value = conversions)
+cost = data['Cost'].sum()
+filtered_data = data[data['DQ'] < 1]
+leads = filtered_data['Number_of_reports__Salesforce_Reports'].sum()
+DQs = data['DQ'].sum()
+CPL = cost/leads
 
 # Additional metrics
 ctr = clicks / impressions
 cvr = conversions / impressions
 cpc = data['Cost'].sum() / conversions
 
-col4, col5, col6 = st.columns(3)
-col4.metric(label = "CTR", value = "{}%".format(round(ctr*100, 2)))
-col5.metric(label = "CVR", value = "{}%".format(round(cvr*100, 2)))
-col6.metric(label = "CPC", value = "{}$".format(round(cpc, 2)))
+col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
+col1.metric(label = "Total Impressions", value = impressions)
+col2.metric(label = "Total Clicks", value = clicks)
+col3.metric(label = "CTR", value = "{}%".format(round(ctr*100, 2)))
+
+col4.metric(label = "Leads", value = leads)
+col5.metric(label = "DQs", value = DQs)
+col6.metric(label = "CPL", value = "{}$".format(round(CPL, 2)))
+
+col7.metric(label = "Placeholder", value = clicks)
+col8.metric(label = "Placeholder", value = clicks)
+col9.metric(label = "Placeholder", value = clicks)
 
 bottom_left_column, bottom_right_column = st.columns(2)
 
