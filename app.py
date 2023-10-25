@@ -82,7 +82,7 @@ daily_data['Impressions'] = daily_impressions['Impressions']
 daily_data['CTR'] = daily_data['Clicks'] / daily_data['Impressions']
 
 numerical_columns = data.select_dtypes(include=['number']).columns
-daily_sums = data.groupby(data['Date'].dt.date)[numerical_columns].sum()
+daily_sums = data.groupby(data['Date'].dt.date, as_index=False)[numerical_columns].sum()
 daily_sums['CTR'] = daily_sums['Clicks'] / daily_sums['Impressions']
 
 st.write(daily_sums)
