@@ -188,4 +188,8 @@ model.fit(daily_aggregated)
 future = model.make_future_dataframe(periods=120)  # Forecast for 120 days into the future
 forecast = model.predict(future)
 
+forecast_plot = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
+
+st.plotly_chart(forecast_plot)
+
 #st.plot(model.plot(forecast))
