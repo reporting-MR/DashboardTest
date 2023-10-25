@@ -202,4 +202,4 @@ fig.update_layout(title='Prophet Forecast of Appointments w/ Confidence Interval
 # Display the Plotly chart in Streamlit
 st.plotly_chart(fig)
 
-#st.plot(model.plot(forecast))
+#st.plot(model.plot(forecast), use_container_width=True)
