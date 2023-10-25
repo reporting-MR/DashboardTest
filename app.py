@@ -78,11 +78,20 @@ st.write(daily_data)
 fig = go.Figure()
 
 # Add a line trace for daily click sums
-fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['Clicks'], mode='lines', name='Daily Clicks'))
+fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['Clicks'], mode='lines', name='Daily Clicks', yaxis='y'))
+fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['CTR'], mode='lines', name='CTR', yaxis='y2'))
+
 fig.update_layout(
-    title='Daily Click Sums',
+    title='Daily Clicks and CTR',
     xaxis_title='Date',
     yaxis_title='Clicks',
+    yaxis2=dict(
+        title='CTR (%)',
+        overlaying='y',
+        side='right',
+        rangemode='tozero'  # Sets the secondary y-axis to start from 0
+    )
 )
+
 st.plotly_chart(fig, use_container_width=True)
 
