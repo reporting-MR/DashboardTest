@@ -81,8 +81,9 @@ daily_impressions = data.groupby(data['Date'].dt.date)['Impressions'].sum().rese
 daily_data['Impressions'] = daily_impressions['Impressions']
 daily_data['CTR'] = daily_data['Clicks'] / daily_data['Impressions']
 
-daily_data = data.groupby(data['Date'].dt.date).sum()
-st.write(daily_data)
+numerical_columns = df.select_dtypes(include=['number']).columns
+daily_sums = data.groupby(data['Date'].dt.date)[numerical_columns].sum()
+st.write(daily_sums)
 
 
 # Create the figure
