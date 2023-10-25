@@ -90,7 +90,7 @@ daily_sums = data.groupby(data['Date'].dt.date)[numerical_columns].sum()
 daily_sums = daily_sums.reset_index()
 daily_sums['CTR'] = daily_sums['Clicks'] / daily_sums['Impressions']
 daily_sums['CPL'] = daily_sums['Cost'] / daily_sums['Number_of_reports__Salesforce_Reports']
-daily_sums['CPA'] = daily_sums['Appts'] / daily_sums['Cost']
+daily_sums['CPA'] = daily_sums['Cost'] / daily_sums['Appts']
 
 ####Line Chart for Clicks and CTR
 fig = go.Figure()
