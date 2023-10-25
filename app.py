@@ -44,7 +44,7 @@ impressions = data['Impressions'].sum()
 clicks = data['Clicks'].sum()
 conversions = data['Conversions'].sum()
 cost = data['Cost'].sum()
-leads = (data['Number_of_reports__Salesforce_Reports'] - data['DQ']).sum()
+leads = data['Number_of_reports__Salesforce_Reports'].sum()
 DQs = data['DQ'].sum()
 CPL = cost/leads
 
