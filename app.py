@@ -76,23 +76,18 @@ with col3:
 ##### Line Charts Under Metrics #####
 col4, col5, col6 = st.columns(3)
 
-####Line Chart for Clicks and CTR
-#Trying to get daily clicks
-data['Date'] = pd.to_datetime(data['Date'])
-daily_data = data.groupby(data['Date'].dt.date)['Clicks'].sum().reset_index()
-daily_impressions = data.groupby(data['Date'].dt.date)['Impressions'].sum().reset_index()
-daily_data['Impressions'] = daily_impressions['Impressions']
-daily_data['CTR'] = daily_data['Clicks'] / daily_data['Impressions']
+#Getting daily data
 
 numerical_columns = data.select_dtypes(include=['number']).columns
 daily_sums = data.groupby(data['Date'].dt.date)[numerical_columns].sum()
 daily_sums = daily_sums.reset_index()
 daily_sums['CTR'] = daily_sums['Clicks'] / daily_sums['Impressions']
+daily_sums['CPL'] = daily_sums['Cost'] / daily_sums['Number_of_reports__Salesforce_Reports']
 
 st.write(daily_sums)
 st.write(daily_data)
 
-# Create the figure
+####Line Chart for Clicks and CTR
 fig = go.Figure()
 # Add a line trace for daily click sums
 fig.add_trace(go.Scatter(x=daily_sums['Date'], y=daily_sums['Clicks'], mode='lines', name='Daily Clicks', yaxis='y'))
@@ -110,11 +105,27 @@ fig.update_layout(
 )
 
 #### Line Chart for Leads and CPL
+fig2 = go.Figure()
+# Add a line trace for daily click sums
+fig2.add_trace(go.Scatter(x=daily_sums['Date'], y=daily_sums['Number_of_reports__Salesforce_Reports'], mode='lines', name='Daily Leads', yaxis='y'))
+fig2.add_trace(go.Scatter(x=daily_sums['Date'], y=daily_sums['CPL'], mode='lines', name='CPL', yaxis='y2'))
+fig2.update_layout(
+    title='Daily Leads and CPL',
+    xaxis_title='Date',
+    yaxis_title='Leads',
+    yaxis2=dict(
+        title='CPL ($)',
+        overlaying='y',
+        side='right',
+        rangemode='tozero'  # Sets the secondary y-axis to start from 0
+    )
+)
+   
 with col4:
     st.plotly_chart(fig, use_container_width=True)
 
 with col5: 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig2, use_container_width=True)
 
 with col6:
     st.plotly_chart(fig, use_container_width=True)
