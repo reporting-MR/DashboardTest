@@ -136,7 +136,7 @@ fig3.update_layout(
     xaxis_title='Date',
     yaxis_title='Leads',
     yaxis2=dict(
-        title='CPL ($)',
+        title='CPA ($)',
         overlaying='y',
         side='right',
         rangemode='tozero'  # Sets the secondary y-axis to start from 0
