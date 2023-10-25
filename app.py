@@ -96,7 +96,7 @@ st.write(daily_data)
 fig = go.Figure()
 # Add a line trace for daily click sums
 fig.add_trace(go.Scatter(x=daily_sums['Date'], y=daily_sums['Clicks'], mode='lines', name='Daily Clicks', yaxis='y'))
-fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_sums['CTR'], mode='lines', name='CTR', yaxis='y2'))
+fig.add_trace(go.Scatter(x=daily_sums['Date'], y=daily_sums['CTR'], mode='lines', name='CTR', yaxis='y2'))
 fig.update_layout(
     title='Daily Clicks and CTR',
     xaxis_title='Date',
