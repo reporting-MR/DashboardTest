@@ -54,7 +54,6 @@ cvr = conversions / impressions
 cpc = data['Cost'].sum() / conversions
 
 col1, col2, col3 = st.columns(3)
-
 with col1:
     col11, col12, col13 = st.columns(3)
     col11.metric(label = "Total Impressions", value = impressions)
@@ -73,6 +72,45 @@ with col3:
     col32.metric(label = "Placeholder", value = clicks)
     col33.metric(label = "Placeholder", value = clicks)
 
+##### Line Charts Under Metrics #####
+
+col4, col5, col6 = st.columns(3)
+
+#Trying to get daily clicks
+data['Date'] = pd.to_datetime(data['Date'])
+daily_data = data.groupby(data['Date'].dt.date)['Clicks'].sum().reset_index()
+daily_impressions = data.groupby(data['Date'].dt.date)['Impressions'].sum().reset_index()
+daily_data['Impressions'] = daily_impressions['Impressions']
+daily_data['CTR'] = daily_data['Clicks'] / daily_data['Impressions']
+st.write(daily_data)
+
+# Create the figure
+fig = go.Figure()
+# Add a line trace for daily click sums
+fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['Clicks'], mode='lines', name='Daily Clicks', yaxis='y'))
+fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['CTR'], mode='lines', name='CTR', yaxis='y2'))
+fig.update_layout(
+    title='Daily Clicks and CTR',
+    xaxis_title='Date',
+    yaxis_title='Clicks',
+    yaxis2=dict(
+        title='CTR (%)',
+        overlaying='y',
+        side='right',
+        rangemode='tozero'  # Sets the secondary y-axis to start from 0
+    )
+)
+with col4:
+    st.plotly_chart(fig, use_container_width=True)
+
+with col5: 
+    st.plotly_chart(fig, use_container_width=True)
+
+with col6:
+    st.plotly_chart(fig, use_container_width=True)
+
+
+### Bottom Charts ###
 bottom_left_column, bottom_right_column = st.columns(2)
 
 with bottom_left_column:
@@ -85,33 +123,4 @@ with bottom_right_column:
     # Scatter plot showing Conversions as a function of cost with a regression line
     fig_scatter = px.scatter(data, x ='Cost', y='Conversions', trendline='ols', title='Conversions vs Cost')
     st.plotly_chart(fig_scatter, use_container_width=True)
-
-#Trying to get daily clicks
-data['Date'] = pd.to_datetime(data['Date'])
-daily_data = data.groupby(data['Date'].dt.date)['Clicks'].sum().reset_index()
-daily_impressions = data.groupby(data['Date'].dt.date)['Impressions'].sum().reset_index()
-daily_data['Impressions'] = daily_impressions['Impressions']
-daily_data['CTR'] = daily_data['Clicks'] / daily_data['Impressions']
-st.write(daily_data)
-
-# Create the figure
-fig = go.Figure()
-
-# Add a line trace for daily click sums
-fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['Clicks'], mode='lines', name='Daily Clicks', yaxis='y'))
-fig.add_trace(go.Scatter(x=daily_data['Date'], y=daily_data['CTR'], mode='lines', name='CTR', yaxis='y2'))
-
-fig.update_layout(
-    title='Daily Clicks and CTR',
-    xaxis_title='Date',
-    yaxis_title='Clicks',
-    yaxis2=dict(
-        title='CTR (%)',
-        overlaying='y',
-        side='right',
-        rangemode='tozero'  # Sets the secondary y-axis to start from 0
-    )
-)
-
-st.plotly_chart(fig, use_container_width=True)
 
