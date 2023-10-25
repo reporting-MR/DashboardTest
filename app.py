@@ -75,8 +75,8 @@ with col3:
     st.write("Appts, L2A, and CPA")
     col31, col32, col33 = st.columns(3)
     col31.metric(label = "Appointments", value = Appointments)
-    col32.metric(label = "L2A", value = L2A)
-    col33.metric(label = "CPA", value = cpa)
+    col32.metric(label = "L2A", value = "{}%".format(round(L2A*100, 2)))
+    col33.metric(label = "CPA", value = "{}$".format(round(cpa, 2)))
 
 ##### Line Charts Under Metrics #####
 col4, col5, col6 = st.columns(3)
