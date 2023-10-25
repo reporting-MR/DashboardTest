@@ -33,6 +33,8 @@ st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Das
 with st.expander("Data Preview"):
     st.dataframe(data)
 
+st.write(data.dtypes)
+
 #### Metrics ####
 st.markdown("<h2 style='text-align: center; color: black;'>Metrics</h2>", unsafe_allow_html=True)
 #st.subheader("Metrics")
