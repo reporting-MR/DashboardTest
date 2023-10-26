@@ -261,6 +261,10 @@ def main_dashboard():
         # Display the Prophet plot from session state
         st.plotly_chart(st.session_state.prophet_plot, use_container_width=True)
 
+        # Display the Prophet plot from session state
+        if "prophet_plot" in st.session_state:
+            st.plotly_chart(st.session_state.prophet_plot, use_container_width=True)
+
 
 if __name__ == '__main__':
     password_protection()
