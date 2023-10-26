@@ -9,7 +9,6 @@ from google.cloud import bigquery
 import statsmodels.api as sm
 from plotly.subplots import make_subplots
 from prophet import Prophet
-import hashlib
 
 st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
 
