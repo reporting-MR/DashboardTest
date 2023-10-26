@@ -29,6 +29,18 @@ def password_protection():
 def main_dashboard():
     st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - October</h1>", unsafe_allow_html=True)
     
+     # Create API client.
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
+    client = bigquery.Client(credentials=credentials)
+    
+    # Perform query.
+    # Uses st.cache_data to only rerun when the query changes or after 10 min.
+    
+    query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date >= "2023-10-01" AND Date <= "2023-10-31"'''
+    data = pandas.read_gbq(query, credentials=credentials)
+    
     ##### Create UI for Filters #####
     st.sidebar.header("Filters")
     
@@ -60,11 +72,6 @@ def main_dashboard():
         query_conditions.append(f'Campaign = "{selected_campaign}"')
     
     ##### Getting the Data #####
-    # Create API client.
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"]
-    )
-    client = bigquery.Client(credentials=credentials)
     
     # Perform query.
     # Uses st.cache_data to only rerun when the query changes or after 10 min.
