@@ -45,23 +45,23 @@ def main_dashboard():
     # Filters
     st.markdown("**Filters**")
     date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
-    channel = st.selectbox("Select Channel", options=["All"] + list(data["Channel_Non_Truth"].unique()), index=0)
-    type_filter = st.selectbox("Select Type", options=["All"] + list(data["Type"].unique()), index=0)
-    state = st.selectbox("Select State", options=["All"] + list(data["State_Name"].unique()), index=0)
-    campaign = st.selectbox("Select Campaign", options=["All"] + list(data["Campaign"].unique()), index=0)
+    channels = st.multiselect("Select Channel", options=["All"] + list(data["Channel_Non_Truth"].unique()), index=0)
+    types = st.multiselect("Select Type", options=["All"] + list(data["Type"].unique()), index=0)
+    states = st.multiselect("Select State", options=["All"] + list(data["State_Name"].unique()), index=0)
+    campaigns = st.multiselect("Select Campaign", options=["All"] + list(data["Campaign"].unique()), index=0)
     
     ##### Modify Data Based on Filters #####
-    if channel != "All":
-        data = data[data['Channel_Non_Truth'] == channel]
+    if "All" not in channels:
+        data = data[data['Channel'].isin(channels)]
 
-    if type_filter != "All":
-        data = data[data['Type'] == type_filter]
+    if "All" not in types:
+        data = data[data['Type'].isin(types)]
 
-    if state != "All":
-        data = data[data['State_Name'] == state]
+    if "All" not in states:
+        data = data[data['State_Name'].isin(states)]
 
-    if campaign != "All":
-        data = data[data['Campaign'] == campaign]
+    if "All" not in campaigns:
+        data = data[data['Campaign'].isin(campaigns)]
 
     data = data[(data['Date'] >= date_range[0]) & (data['Date'] <= date_range[1])]
     
