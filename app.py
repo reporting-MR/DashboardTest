@@ -27,6 +27,38 @@ def password_protection():
 
 
 def main_dashboard():
+    st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - October</h1>", unsafe_allow_html=True)
+    
+    ##### Create UI for Filters #####
+    st.sidebar.header("Filters")
+    
+    # Date range slider
+    min_date = data['Date'].min().date()
+    max_date = data['Date'].max().date()
+    selected_dates = st.sidebar.date_input('Select Date Range', [min_date, max_date])
+    start_date, end_date = selected_dates
+
+    # Other filters
+    selected_channel = st.sidebar.selectbox("Select Channel", options=['All'] + list(data['Channel'].unique()))
+    selected_type = st.sidebar.selectbox("Select Type", options=['All'] + list(data['Type'].unique()))
+    selected_state = st.sidebar.selectbox("Select State", options=['All'] + list(data['State_Name'].unique()))
+    selected_campaign = st.sidebar.selectbox("Select Campaign", options=['All'] + list(data['Campaign'].unique()))
+
+    ##### Modify Data Query Based on Filters #####
+    
+    query_conditions = []
+    query_conditions.append(f'Date >= "{start_date}"')
+    query_conditions.append(f'Date <= "{end_date}"')
+
+    if selected_channel != 'All':
+        query_conditions.append(f'Channel = "{selected_channel}"')
+    if selected_type != 'All':
+        query_conditions.append(f'Type = "{selected_type}"')
+    if selected_state != 'All':
+        query_conditions.append(f'State_Name = "{selected_state}"')
+    if selected_campaign != 'All':
+        query_conditions.append(f'Campaign = "{selected_campaign}"')
+    
     ##### Getting the Data #####
     # Create API client.
     credentials = service_account.Credentials.from_service_account_info(
@@ -37,10 +69,10 @@ def main_dashboard():
     # Perform query.
     # Uses st.cache_data to only rerun when the query changes or after 10 min.
     
-    query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date >= "2023-10-01" AND Date <= "2023-10-31"'''
+    # Construct the final query
+    query_condition_str = ' AND '.join(query_conditions)
+    query = f'''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE {query_condition_str}'''
     data = pandas.read_gbq(query, credentials=credentials)
-    
-    st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - October</h1>", unsafe_allow_html=True)
     
     ##### Displaying the dashboard #####
     # Collapsible data frame
