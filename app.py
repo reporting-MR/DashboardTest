@@ -42,12 +42,10 @@ def main_dashboard():
     
     st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - October</h1>", unsafe_allow_html=True)
     
-    
     ##### Displaying the dashboard #####
     # Collapsible data frame
     with st.expander("Data Preview"):
         st.dataframe(data)
-    
     
     #### Metrics ####
     st.markdown("<h2 style='text-align: center; color: black;'>Metrics</h2>", unsafe_allow_html=True)
@@ -192,7 +190,7 @@ def main_dashboard():
     
     # Group by date and sum 'Appointments' to get 'y'
     data2['Appts'] = pd.to_numeric(data2['Appts'], errors='coerce').fillna(0).astype(int)
-    daily_aggregated = data2.groupby(data2['Date'].dt.date)['Appts'].sum().reset_index()
+    daily_aggregated = data2.groupby(data2['Date'].dt.to_period("D").dt.to_timestamp())['Appts'].sum().reset_index()
     daily_aggregated.columns = ['ds', 'y']  # Rename columns
     
     model = Prophet()
