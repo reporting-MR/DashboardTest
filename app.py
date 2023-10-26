@@ -55,7 +55,7 @@ def main_dashboard():
     
     ##### Modify Data Based on Filters #####
     if "All" not in channels:
-        data = data[data['Channel'].isin(channels)]
+        data = data[data['Channel_Non_Truth'].isin(channels)]
 
     if "All" not in types:
         data = data[data['Type'].isin(types)]
