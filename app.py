@@ -32,45 +32,42 @@ def password_protection():
 def main_dashboard():
     st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - October</h1>", unsafe_allow_html=True)
     
-     # Create API client.
+    # Create API client.
     credentials = service_account.Credentials.from_service_account_info(
         st.secrets["gcp_service_account"]
     )
     client = bigquery.Client(credentials=credentials)
     
-    # Perform query.
-    # Uses st.cache_data to only rerun when the query changes or after 10 min.
-    
-    query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date >= "2023-10-01" AND Date <= "2023-10-31"'''
-    data = pandas.read_gbq(query, credentials=credentials)
+    # Initial query to retrieve a base dataset.
+    initial_query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date >= "2023-10-01" AND Date <= "2023-10-31"'''
+    initial_data = pandas.read_gbq(initial_query, credentials=credentials)
+    min_date = initial_data['Date'].min()
+    max_date = initial_data['Date'].max()
     
     # Filters
     st.markdown("**Filters**")
     date_range = st.date_input('Date Range', [min_date, max_date])
-    channel = st.selectbox("Select Channel", options=["All"] + list(data["Channel"].unique()), index=0)
-    type_filter = st.selectbox("Select Type", options=["All"] + list(data["Type"].unique()), index=0)
-    state = st.selectbox("Select State", options=["All"] + list(data["State_Name"].unique()), index=0)
-    campaign = st.selectbox("Select Campaign", options=["All"] + list(data["Campaign"].unique()), index=0)
-
+    channel = st.selectbox("Select Channel", options=["All"] + list(initial_data["Channel"].unique()), index=0)
+    type_filter = st.selectbox("Select Type", options=["All"] + list(initial_data["Type"].unique()), index=0)
+    state = st.selectbox("Select State", options=["All"] + list(initial_data["State_Name"].unique()), index=0)
+    campaign = st.selectbox("Select Campaign", options=["All"] + list(initial_data["Campaign"].unique()), index=0)
+    
     ##### Modify Data Query Based on Filters #####
     
     query_conditions = []
-    query_conditions.append(f'Date >= "{start_date}"')
-    query_conditions.append(f'Date <= "{end_date}"')
+    query_conditions.append(f'Date >= "{date_range[0].strftime('%Y-%m-%d')}"')
+    query_conditions.append(f'Date <= "{date_range[1].strftime('%Y-%m-%d')}"')
 
-    if selected_channel != 'All':
-        query_conditions.append(f'Channel = "{selected_channel}"')
-    if selected_type != 'All':
-        query_conditions.append(f'Type = "{selected_type}"')
-    if selected_state != 'All':
-        query_conditions.append(f'State_Name = "{selected_state}"')
-    if selected_campaign != 'All':
-        query_conditions.append(f'Campaign = "{selected_campaign}"')
+    if channel != 'All':
+        query_conditions.append(f'Channel = "{channel}"')
+    if type_filter != 'All':
+        query_conditions.append(f'Type = "{type_filter}"')
+    if state != 'All':
+        query_conditions.append(f'State_Name = "{state}"')
+    if campaign != 'All':
+        query_conditions.append(f'Campaign = "{campaign}"')
     
     ##### Getting the Data #####
-    
-    # Perform query.
-    # Uses st.cache_data to only rerun when the query changes or after 10 min.
     
     # Construct the final query
     query_condition_str = ' AND '.join(query_conditions)
