@@ -13,18 +13,21 @@ from prophet import Prophet
 st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
 
 def password_protection():
-    st.sidebar.title("Password Login")
-    password = st.sidebar.text_input("Enter Password:", type="password")
-    
-    # Entered password
-    correct_hashed_password = "Sunpower1234"  # Replace with your actual hashed password
-
-    if st.sidebar.button("Login"):
-        if password == correct_hashed_password:
-            main_dashboard()
-        else:
-            st.sidebar.error("Incorrect Password. Please try again or contact the administrator.")
-
+    if 'authenticated' not in st.session_state:
+        st.session_state.authenticated = False
+        
+    if not st.session_state.authenticated:
+        password = st.text_input("Enter Password:", type="password")
+        correct_hashed_password = "Sunpower1234"
+        
+        if st.button("Login"):
+            if password == correct_hashed_password:
+                st.session_state.authenticated = True
+                main_dashboard()
+            else:
+                st.error("Incorrect Password. Please try again or contact the administrator.")
+    else:
+        main_dashboard()
 
 def main_dashboard():
     st.markdown("<h1 style='text-align: center; color: black;'>SunPower Overview Dash - October</h1>", unsafe_allow_html=True)
