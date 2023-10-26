@@ -45,7 +45,7 @@ def main_dashboard():
     # Filters
     st.markdown("**Filters**")
     date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
-    channel = st.selectbox("Select Channel", options=["All"] + list(data["Channel"].unique()), index=0)
+    channel = st.selectbox("Select Channel", options=["All"] + list(data["Channel_Non_Truth"].unique()), index=0)
     type_filter = st.selectbox("Select Type", options=["All"] + list(data["Type"].unique()), index=0)
     state = st.selectbox("Select State", options=["All"] + list(data["State_Name"].unique()), index=0)
     campaign = st.selectbox("Select Campaign", options=["All"] + list(data["Campaign"].unique()), index=0)
