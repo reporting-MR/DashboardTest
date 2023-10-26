@@ -44,20 +44,13 @@ def main_dashboard():
     query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date >= "2023-10-01" AND Date <= "2023-10-31"'''
     data = pandas.read_gbq(query, credentials=credentials)
     
-    ##### Create UI for Filters #####
-    st.sidebar.header("Filters")
-    
-    # Date range slider
-    min_date = data['Date'].min()
-    max_date = data['Date'].max()
-    selected_dates = st.sidebar.date_input('Select Date Range', [min_date, max_date])
-    start_date, end_date = selected_dates
-
-    # Other filters
-    selected_channel = st.sidebar.selectbox("Select Channel", options=['All'] + list(data['Channel_Non_Truth'].unique()))
-    selected_type = st.sidebar.selectbox("Select Type", options=['All'] + list(data['Type'].unique()))
-    selected_state = st.sidebar.selectbox("Select State", options=['All'] + list(data['State_Name'].unique()))
-    selected_campaign = st.sidebar.selectbox("Select Campaign", options=['All'] + list(data['Campaign'].unique()))
+    # Filters
+    st.markdown("**Filters**")
+    date_range = st.date_input('Date Range', [min_date, max_date])
+    channel = st.selectbox("Select Channel", options=["All"] + list(data["Channel"].unique()), index=0)
+    type_filter = st.selectbox("Select Type", options=["All"] + list(data["Type"].unique()), index=0)
+    state = st.selectbox("Select State", options=["All"] + list(data["State_Name"].unique()), index=0)
+    campaign = st.selectbox("Select Campaign", options=["All"] + list(data["Campaign"].unique()), index=0)
 
     ##### Modify Data Query Based on Filters #####
     
