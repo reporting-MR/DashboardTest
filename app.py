@@ -51,7 +51,7 @@ def main_dashboard():
     start_date, end_date = selected_dates
 
     # Other filters
-    selected_channel = st.sidebar.selectbox("Select Channel", options=['All'] + list(data['Channel'].unique()))
+    selected_channel = st.sidebar.selectbox("Select Channel", options=['All'] + list(data['Channel_Non_Truth'].unique()))
     selected_type = st.sidebar.selectbox("Select Type", options=['All'] + list(data['Type'].unique()))
     selected_state = st.sidebar.selectbox("Select State", options=['All'] + list(data['State_Name'].unique()))
     selected_campaign = st.sidebar.selectbox("Select Campaign", options=['All'] + list(data['Campaign'].unique()))
