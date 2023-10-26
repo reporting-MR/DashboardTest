@@ -211,58 +211,52 @@ def main_dashboard():
     #### Prophet Forecasting Model ####
     # Check if the Prophet plot is already in session state
     st.markdown("<h3 style='text-align: center; color: black;'>Appointments Forecast with Conf. Interval</h3>", unsafe_allow_html=True)
-    if "prophet_plot" not in st.session_state:
-        # Display loading message
-        loading_message = st.empty()
-        loading_message.text("Appointment forecast loading... this may take a moment")
-        
-        query2 = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel`'''
-        data2 = pandas.read_gbq(query2, credentials=credentials)
-        data2['Date'] = pd.to_datetime(data2['Date'])
     
-        # Group by date and sum 'Appointments' to get 'y'
-        data2['Appts'] = pd.to_numeric(data2['Appts'], errors='coerce').fillna(0).astype(int)
-        daily_aggregated = data2.groupby(data2['Date'].dt.to_period("D").dt.to_timestamp())['Appts'].sum().reset_index()
-        daily_aggregated.columns = ['ds', 'y']  # Rename columns
+    # Display loading message
+    loading_message = st.empty()
+    loading_message.text("Appointment forecast loading... this may take a moment")
     
-        #Initiate Model
-        model = Prophet()
-        model.fit(daily_aggregated)
-        
-        future = model.make_future_dataframe(periods=120)  # Forecast for 120 days into the future
-        forecast = model.predict(future)
-        
-        # Get the current year
-        current_year = pd.Timestamp.now().year
-        
-        # Filter the data for the current year for plotting
-        daily_aggregated_current_year = daily_aggregated[daily_aggregated['ds'].dt.year >= current_year]
-        forecast_current_year = forecast[forecast['ds'].dt.year >= current_year]
-        
-        # Create Plotly traces for the actual values
-        trace_actual = go.Scatter(x=daily_aggregated_current_year['ds'], y=daily_aggregated_current_year['y'], mode='lines', name='Actual')
-        
-        # Create Plotly traces for the forecasted values, lower, and upper bounds
-        trace_forecast = go.Scatter(x=forecast_current_year['ds'], y=forecast_current_year['yhat'], mode='lines', name='Forecast')
-        trace_lower = go.Scatter(x=forecast_current_year['ds'], y=forecast_current_year['yhat_lower'], fill='tonexty', mode='none', name='Lower Bound')
-        trace_upper = go.Scatter(x=forecast_current_year['ds'], y=forecast_current_year['yhat_upper'], fill='tonexty', mode='none', name='Upper Bound')
-        
-        # Create a Plotly figure with all the traces
-        fig = go.Figure(data=[trace_actual, trace_forecast, trace_lower, trace_upper])
-        
-        # Customize the layout
-        fig.update_layout(title='Prophet Forecast of Appointments w/ Confidence Interval for ' + str(current_year), xaxis_title='Date', yaxis_title='Forecasted Appts')
-        
-        # Store the Prophet plot in session state
-        st.session_state.prophet_plot = fig
-        
-        # Remove the loading message
-        loading_message.empty()
+    query2 = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel`'''
+    data2 = pandas.read_gbq(query2, credentials=credentials)
+    data2['Date'] = pd.to_datetime(data2['Date'])
 
-        # Display the Prophet plot from session state
-        if "prophet_plot" in st.session_state:
-            st.plotly_chart(st.session_state.prophet_plot, use_container_width=True)
+    # Group by date and sum 'Appointments' to get 'y'
+    data2['Appts'] = pd.to_numeric(data2['Appts'], errors='coerce').fillna(0).astype(int)
+    daily_aggregated = data2.groupby(data2['Date'].dt.to_period("D").dt.to_timestamp())['Appts'].sum().reset_index()
+    daily_aggregated.columns = ['ds', 'y']  # Rename columns
 
+    #Initiate Model
+    model = Prophet()
+    model.fit(daily_aggregated)
+    
+    future = model.make_future_dataframe(periods=120)  # Forecast for 120 days into the future
+    forecast = model.predict(future)
+    
+    # Get the current year
+    current_year = pd.Timestamp.now().year
+    
+    # Filter the data for the current year for plotting
+    daily_aggregated_current_year = daily_aggregated[daily_aggregated['ds'].dt.year >= current_year]
+    forecast_current_year = forecast[forecast['ds'].dt.year >= current_year]
+    
+    # Create Plotly traces for the actual values
+    trace_actual = go.Scatter(x=daily_aggregated_current_year['ds'], y=daily_aggregated_current_year['y'], mode='lines', name='Actual')
+    
+    # Create Plotly traces for the forecasted values, lower, and upper bounds
+    trace_forecast = go.Scatter(x=forecast_current_year['ds'], y=forecast_current_year['yhat'], mode='lines', name='Forecast')
+    trace_lower = go.Scatter(x=forecast_current_year['ds'], y=forecast_current_year['yhat_lower'], fill='tonexty', mode='none', name='Lower Bound')
+    trace_upper = go.Scatter(x=forecast_current_year['ds'], y=forecast_current_year['yhat_upper'], fill='tonexty', mode='none', name='Upper Bound')
+    
+    # Create a Plotly figure with all the traces
+    fig_proph = go.Figure(data=[trace_actual, trace_forecast, trace_lower, trace_upper])
+    
+    # Customize the layout
+    fig_proph.update_layout(title='Prophet Forecast of Appointments w/ Confidence Interval for ' + str(current_year), xaxis_title='Date', yaxis_title='Forecasted Appts')
+    
+    # Remove the loading message
+    loading_message.empty()
 
+    st.plotly_chart(fig_proph, use_container_width=True)   
+    
 if __name__ == '__main__':
     password_protection()
