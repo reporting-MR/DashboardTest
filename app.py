@@ -206,8 +206,12 @@ def main_dashboard():
         # Scatter plot showing Conversions as a function of cost with a regression line
         fig_scatter = px.scatter(data, x ='Cost', y='Conversions', trendline='ols', title='Conversions vs Cost')
         st.plotly_chart(fig_scatter, use_container_width=True)
+
     
-    
+    #### Prophet Forecasting Model ####
+    #Display loading message
+    loading_message = st.empty()
+    loading_message.text("Appointment forecast loading... this may take a moment")
     
     query2 = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel`'''
     data2 = pandas.read_gbq(query2, credentials=credentials)
@@ -219,10 +223,7 @@ def main_dashboard():
     daily_aggregated = data2.groupby(data2['Date'].dt.to_period("D").dt.to_timestamp())['Appts'].sum().reset_index()
     daily_aggregated.columns = ['ds', 'y']  # Rename columns
 
-    #Display loading message
-    loading_message = st.empty()
-    loading_message.text("Appointment forecast loading... this may take a moment")
-
+    #Initiate Model
     model = Prophet()
     model.fit(daily_aggregated)
     
