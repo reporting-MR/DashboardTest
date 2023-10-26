@@ -17,7 +17,7 @@ def password_protection():
     
     # Hash the entered password
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    correct_hashed_password = "YOUR_HASHED_PASSWORD"  # Replace with your actual hashed password
+    correct_hashed_password = "Sunpower1234"  # Replace with your actual hashed password
 
     if st.sidebar.button("Login"):
         if hashed_password == correct_hashed_password:
