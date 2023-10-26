@@ -52,7 +52,7 @@ def main_dashboard():
     
     ##### Modify Data Based on Filters #####
     if channel != "All":
-        data = data[data['Channel'] == channel]
+        data = data[data['Channel_Non_Truth'] == channel]
 
     if type_filter != "All":
         data = data[data['Type'] == type_filter]
