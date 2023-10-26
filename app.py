@@ -210,6 +210,7 @@ def main_dashboard():
     
     #### Prophet Forecasting Model ####
     # Check if the Prophet plot is already in session state
+    st.markdown("<h3 style='text-align: center; color: black;'>Appointments Forecast with Conf. Interval</h3>", unsafe_allow_html=True)
     if "prophet_plot" not in st.session_state:
         # Display loading message
         loading_message = st.empty()
@@ -257,9 +258,6 @@ def main_dashboard():
         
         # Remove the loading message
         loading_message.empty()
-        
-        # Display the Prophet plot from session state
-        st.plotly_chart(st.session_state.prophet_plot, use_container_width=True)
 
         # Display the Prophet plot from session state
         if "prophet_plot" in st.session_state:
