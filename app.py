@@ -201,19 +201,26 @@ def main_dashboard():
     future = model.make_future_dataframe(periods=120)  # Forecast for 120 days into the future
     forecast = model.predict(future)
     
+    # Get the current year
+    current_year = pd.Timestamp.now().year
+    
+    # Filter the data for the current year for plotting
+    daily_aggregated_current_year = daily_aggregated[daily_aggregated['ds'].dt.year >= current_year]
+    forecast_current_year = forecast[forecast['ds'].dt.year >= current_year]
+    
     # Create Plotly traces for the actual values
-    trace_actual = go.Scatter(x=daily_aggregated['ds'], y=daily_aggregated['y'], mode='lines', name='Actual')
+    trace_actual = go.Scatter(x=daily_aggregated_current_year['ds'], y=daily_aggregated_current_year['y'], mode='lines', name='Actual')
     
     # Create Plotly traces for the forecasted values, lower, and upper bounds
-    trace_forecast = go.Scatter(x=forecast['ds'], y=forecast['yhat'], mode='lines', name='Forecast')
-    trace_lower = go.Scatter(x=forecast['ds'], y=forecast['yhat_lower'], fill='tonexty', mode='none', name='Lower Bound')
-    trace_upper = go.Scatter(x=forecast['ds'], y=forecast['yhat_upper'], fill='tonexty', mode='none', name='Upper Bound')
+    trace_forecast = go.Scatter(x=forecast_current_year['ds'], y=forecast_current_year['yhat'], mode='lines', name='Forecast')
+    trace_lower = go.Scatter(x=forecast_current_year['ds'], y=forecast_current_year['yhat_lower'], fill='tonexty', mode='none', name='Lower Bound')
+    trace_upper = go.Scatter(x=forecast_current_year['ds'], y=forecast_current_year['yhat_upper'], fill='tonexty', mode='none', name='Upper Bound')
     
     # Create a Plotly figure with all the traces
     fig = go.Figure(data=[trace_actual, trace_forecast, trace_lower, trace_upper])
     
     # Customize the layout
-    fig.update_layout(title='Prophet Forecast of Appointments w/ Confidence Interval', xaxis_title='Date', yaxis_title='Forecasted Appts')
+    fig.update_layout(title='Prophet Forecast of Appointments w/ Confidence Interval for ' + str(current_year), xaxis_title='Date', yaxis_title='Forecasted Appts')
     
     # Display the Plotly chart in Streamlit
     st.plotly_chart(fig, use_container_width=True)
