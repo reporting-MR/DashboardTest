@@ -216,7 +216,7 @@ def main_dashboard():
     loading_message = st.empty()
     loading_message.text("Appointment forecast loading... this may take a moment")
     
-    query2 = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel`'''
+    query2 = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date >= "2023-01-01"'''
     data2 = pandas.read_gbq(query2, credentials=credentials)
     data2['Date'] = pd.to_datetime(data2['Date'])
 
