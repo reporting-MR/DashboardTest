@@ -55,8 +55,8 @@ def main_dashboard():
     ##### Modify Data Query Based on Filters #####
     
     query_conditions = []
-    query_conditions.append(f'Date >= "{date_range[0].strftime('%Y-%m-%d')}"')
-    query_conditions.append(f'Date <= "{date_range[1].strftime('%Y-%m-%d')}"')
+    query_conditions.append(f'Date >= "{date_range[0].strftime("%Y-%m-%d")}"')
+    query_conditions.append(f'Date <= "{date_range[1].strftime("%Y-%m-%d")}"')
 
     if channel != 'All':
         query_conditions.append(f'Channel = "{channel}"')
