@@ -218,7 +218,11 @@ def main_dashboard():
     data2['Appts'] = pd.to_numeric(data2['Appts'], errors='coerce').fillna(0).astype(int)
     daily_aggregated = data2.groupby(data2['Date'].dt.to_period("D").dt.to_timestamp())['Appts'].sum().reset_index()
     daily_aggregated.columns = ['ds', 'y']  # Rename columns
-    
+
+    #Display loading message
+    loading_message = st.empty()
+    loading_message.text("Appointment forecast loading... this may take a moment")
+
     model = Prophet()
     model.fit(daily_aggregated)
     
@@ -245,6 +249,9 @@ def main_dashboard():
     
     # Customize the layout
     fig.update_layout(title='Prophet Forecast of Appointments w/ Confidence Interval for ' + str(current_year), xaxis_title='Date', yaxis_title='Forecasted Appts')
+
+    #Remove loading message
+    loading_message.empty()
     
     # Display the Plotly chart in Streamlit
     st.plotly_chart(fig, use_container_width=True)
