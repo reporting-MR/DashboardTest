@@ -41,14 +41,17 @@ def main_dashboard():
     # Perform query.
     query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date >= "2023-10-01" AND Date <= "2023-10-31"'''
     data = pandas.read_gbq(query, credentials=credentials)
+
+    #Channel_Non_Truth
     
     # Filters
     st.markdown("**Filters**")
     date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
-    channels = st.multiselect("Select Channel", options=["All"] + list(data["Channel_Non_Truth"].unique()), index=0)
-    types = st.multiselect("Select Type", options=["All"] + list(data["Type"].unique()), index=0)
-    states = st.multiselect("Select State", options=["All"] + list(data["State_Name"].unique()), index=0)
-    campaigns = st.multiselect("Select Campaign", options=["All"] + list(data["Campaign"].unique()), index=0)
+    channels = st.multiselect("Select Channel(s)", options=["All"] + list(data["Channel_Non_Truth"].unique()), default=["All"])
+    types = st.multiselect("Select Type(s)", options=["All"] + list(data["Type"].unique()), default=["All"])
+    states = st.multiselect("Select State(s)", options=["All"] + list(data["State_Name"].unique()), default=["All"])
+    campaigns = st.multiselect("Select Campaign(s)", options=["All"] + list(data["Campaign"].unique()), default=["All"])
+
     
     ##### Modify Data Based on Filters #####
     if "All" not in channels:
