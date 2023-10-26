@@ -45,8 +45,8 @@ def main_dashboard():
     st.sidebar.header("Filters")
     
     # Date range slider
-    min_date = data['Date'].min().date()
-    max_date = data['Date'].max().date()
+    min_date = data['Date'].min()
+    max_date = data['Date'].max()
     selected_dates = st.sidebar.date_input('Select Date Range', [min_date, max_date])
     start_date, end_date = selected_dates
 
