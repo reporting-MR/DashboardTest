@@ -15,12 +15,11 @@ def password_protection():
     st.sidebar.title("Password Login")
     password = st.sidebar.text_input("Enter Password:", type="password")
     
-    # Hash the entered password
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    # Entered password
     correct_hashed_password = "Sunpower1234"  # Replace with your actual hashed password
 
     if st.sidebar.button("Login"):
-        if hashed_password == correct_hashed_password:
+        if password == correct_hashed_password:
             main_dashboard()
         else:
             st.sidebar.error("Incorrect Password. Please try again or contact the administrator.")
