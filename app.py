@@ -212,10 +212,16 @@ def main_dashboard():
     bottom_left_column, bottom_right_column = st.columns(2)
     
     with bottom_left_column:
-        # Pie chart showing Conversions by Campaign
-        fig_pie = px.pie(data, names='State_Name', values='Cost', title='Cost by State')
-        fig_pie.update_traces(textposition='inside')
-        st.plotly_chart(fig_pie, use_container_width=True)
+        #Map showing leads by state
+        fig_map = px.choropleth(data, 
+                        locations='State_Name', 
+                        locationmode='USA-states', 
+                        color='Appts', 
+                        scope='usa', 
+                        title='Appts by State',
+                        color_continuous_scale='Viridis')
+
+        st.plotly_chart(fig_map, use_container_width=True)
     
     with bottom_right_column:
         # Scatter plot showing Conversions as a function of cost with a regression line
