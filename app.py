@@ -231,11 +231,11 @@ def main_dashboard():
         fig_map = px.choropleth(data, 
                         locations='State_Abbreviation', 
                         locationmode='USA-states', 
-                        color='Appts', 
+                        color='Number_of_reports__Salesforce_Reports', 
                         scope='usa', 
-                        title='Appts by State',
+                        title='Leads by State',
                         color_continuous_scale='Viridis',
-                        labels={'Appts':'Appointments'})
+                        labels={'Number_of_reports__Salesforce_Reports':'Leads'})
 
         st.plotly_chart(fig_map, use_container_width=True)
     
