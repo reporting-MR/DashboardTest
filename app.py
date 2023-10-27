@@ -243,7 +243,7 @@ def main_dashboard():
     
     with bottom_right_column:
         # Scatter plot showing Conversions as a function of clicks with a regression line
-        fig_scatter = px.scatter(data, x ='Cost', y='Clicks', trendline='ols', title='Clicks vs Cost')
+        fig_scatter = px.scatter(data, x ='Cost', y='Conversions', trendline='ols', title='Conversions vs Cost')
         st.plotly_chart(fig_scatter, use_container_width=True)
 
     
