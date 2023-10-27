@@ -215,7 +215,7 @@ def main_dashboard():
         #Map showing leads by state
         fig_map = px.choropleth(data, 
                         locations='State_Name', 
-                        geojson=states, 
+                        locationmode='USA-states', 
                         color='Appts', 
                         scope='usa', 
                         title='Appts by State',
