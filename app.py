@@ -46,11 +46,17 @@ def main_dashboard():
     
     # Filters
     st.markdown("**Filters**")
-    date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
-    channels = st.multiselect("Select Channel(s)", options=["All"] + list(data["Channel_Non_Truth"].unique()), default=["All"])
-    types = st.multiselect("Select Type(s)", options=["All"] + list(data["Type"].unique()), default=["All"])
-    states = st.multiselect("Select State(s)", options=["All"] + list(data["State_Name"].unique()), default=["All"])
-    campaigns = st.multiselect("Select Campaign(s)", options=["All"] + list(data["Campaign"].unique()), default=["All"])
+    col01, col02, col03, col04, col05 = st.columns(5)
+    with col01:
+        date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
+    with col02:
+        channels = st.multiselect("Select Channel(s)", options=["All"] + list(data["Channel_Non_Truth"].unique()), default=["All"])
+    with col03:
+        types = st.multiselect("Select Type(s)", options=["All"] + list(data["Type"].unique()), default=["All"])
+    with col04:
+        states = st.multiselect("Select State(s)", options=["All"] + list(data["State_Name"].unique()), default=["All"])
+    with col05:
+        campaigns = st.multiselect("Select Campaign(s)", options=["All"] + list(data["Campaign"].unique()), default=["All"])
 
     
     ##### Modify Data Based on Filters #####
