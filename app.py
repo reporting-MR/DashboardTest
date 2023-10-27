@@ -56,23 +56,26 @@ def main_dashboard():
     with col01:
         date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
     with col02:
-        st.write("Filter Campaigns")
-        with st.expander("Campaigns"):
+        st.write("Filter Channel")
+        with st.expander("Channel"):
             selected_channels = [channel for channel in channels_unique if st.checkbox(channel, key=channel)]
             if not selected_channels:  # If nothing is selected, select all
                 selected_channels = channels_unique
     with col03:
-        selected_types = [type for type in types_unique if st.checkbox(type, key="type_" + type)]
-        if not selected_types:
-            selected_types = types_unique
+        with st.expander("Filter Types"):
+            selected_types = [type for type in types_unique if st.checkbox(type, key="type_" + type)]
+            if not selected_types:
+                selected_types = types_unique
     with col04:
-        selected_states = [state for state in states_unique if st.checkbox(state, key=state)]
-        if not selected_states:
-            selected_states = states_unique    
+        with st.expander("Filter States"):
+            selected_states = [state for state in states_unique if st.checkbox(state, key=state)]
+            if not selected_states:
+                selected_states = states_unique    
     with col05:
-        selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(str(campaign), key=str(campaign))]
-        if not selected_campaigns:
-            selected_campaigns = campaigns_unique
+        with st.expander("Filter Campaigns"):
+            selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(str(campaign), key=str(campaign))]
+            if not selected_campaigns:
+                selected_campaigns = campaigns_unique
     
     ##### Modify Data Based on Filters #####
     data = data[data['Channel_Non_Truth'].isin(selected_channels)]
