@@ -242,8 +242,8 @@ def main_dashboard():
         st.plotly_chart(fig_map, use_container_width=True)
     
     with bottom_right_column:
-        # Scatter plot showing Conversions as a function of appts with a regression line
-        fig_scatter = px.scatter(data, x ='Cost', y='Appts', trendline='ols', title='Appts vs Cost')
+        # Scatter plot showing Conversions as a function of clicks with a regression line
+        fig_scatter = px.scatter(data, x ='Cost', y='Clicks', trendline='ols', title='Clicks vs Cost')
         st.plotly_chart(fig_scatter, use_container_width=True)
 
     
