@@ -54,10 +54,9 @@ def main_dashboard():
     st.markdown("**Filters**")
     col01, col02, col03, col04, col05 = st.columns(5)
     with col01:
-        date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
+        date_range = st.date_input( [data['Date'].min(), data['Date'].max()])
     with col02:
-        st.write("Filter Channel")
-        with st.expander("Channel"):
+        with st.expander("Filter Channel"):
             selected_channels = [channel for channel in channels_unique if st.checkbox(channel, key=channel)]
             if not selected_channels:  # If nothing is selected, select all
                 selected_channels = channels_unique
