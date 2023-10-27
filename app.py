@@ -57,22 +57,22 @@ def main_dashboard():
         date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
     with col02:
         with st.expander("Filter Channel"):
-            selected_channels = [channel for channel in channels_unique if st.checkbox(channel, key=channel)]
+            selected_channels = [channel for channel in channels_unique if st.checkbox(channel, value=True, key=channel)]
             if not selected_channels:  # If nothing is selected, select all
                 selected_channels = channels_unique
     with col03:
         with st.expander("Filter Types"):
-            selected_types = [type for type in types_unique if st.checkbox(type, key="type_" + type)]
+            selected_types = [type for type in types_unique if st.checkbox(type, value=True, key="type_" + type)]
             if not selected_types:
                 selected_types = types_unique
     with col04:
         with st.expander("Filter States"):
-            selected_states = [state for state in states_unique if st.checkbox(state, key=state)]
+            selected_states = [state for state in states_unique if st.checkbox(state, value=True, key=state)]
             if not selected_states:
                 selected_states = states_unique    
     with col05:
         with st.expander("Filter Campaigns"):
-            selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(str(campaign), key=str(campaign))]
+            selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(str(campaign), value=True, key=str(campaign))]
             if not selected_campaigns:
                 selected_campaigns = campaigns_unique
     
