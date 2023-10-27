@@ -229,7 +229,7 @@ def main_dashboard():
     with bottom_left_column:
         #Map showing leads by state
         fig_map = px.choropleth(data, 
-                        locations='State_Abbreviations', 
+                        locations='State_Abbreviation', 
                         locationmode='USA-states', 
                         color='Appts', 
                         scope='usa', 
