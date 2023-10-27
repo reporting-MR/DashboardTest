@@ -225,6 +225,10 @@ def main_dashboard():
 
     # Convert full state names in your dataframe to abbreviations
     data['State_Abbreviation'] = data['State_Name'].map(state_abbreviations)
+
+
+    with st.expander("Data Preview"):
+        st.dataframe(data)
         
     with bottom_left_column:
         #Map showing leads by state
