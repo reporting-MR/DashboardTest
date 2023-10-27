@@ -68,7 +68,7 @@ def main_dashboard():
         if not selected_states:
             selected_states = states_unique    
     with col05:
-        selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(campaign, key=campaign)]
+        selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(str(campaign), key=str(campaign))]
         if not selected_campaigns:
             selected_campaigns = campaigns_unique
     
