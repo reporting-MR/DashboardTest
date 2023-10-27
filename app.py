@@ -226,20 +226,18 @@ def main_dashboard():
     # Convert full state names in your dataframe to abbreviations
     data['State_Abbreviation'] = data['State_Name'].map(state_abbreviations)
 
-
-    with st.expander("Data Preview"):
-        st.dataframe(data)
+    aggregated_data = data.groupby('State_Abbreviation').agg({'Appts': 'sum'}).reset_index()
         
     with bottom_left_column:
         #Map showing leads by state
-        fig_map = px.choropleth(data, 
+        fig_map = px.choropleth(aggregated_data, 
                         locations='State_Abbreviation', 
                         locationmode='USA-states', 
-                        color='Clicks', 
+                        color='Appts', 
                         scope='usa', 
-                        title='Clicks by State',
+                        title='Appts by State',
                         color_continuous_scale='Viridis',
-                        labels={'Clicks':'Clicks'})
+                        labels={'Appts':'Appts'})
 
         st.plotly_chart(fig_map, use_container_width=True)
     
