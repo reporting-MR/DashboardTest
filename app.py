@@ -216,9 +216,9 @@ def main_dashboard():
         fig_map = px.choropleth(data, 
                         locations='State_Name', 
                         locationmode='USA-states', 
-                        color='Appts', 
+                        color='Clicks', 
                         scope='usa', 
-                        title='Appts by State',
+                        title='Clicks by State',
                         color_continuous_scale='Viridis')
 
         st.plotly_chart(fig_map, use_container_width=True)
