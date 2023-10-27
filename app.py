@@ -43,6 +43,12 @@ def main_dashboard():
     data = pandas.read_gbq(query, credentials=credentials)
 
     #Channel_Non_Truth
+
+    # Assuming you have the following unique values lists for your filters:
+    channels_unique = list(data["Channel_Non_Truth"].unique())
+    types_unique = list(data["Type"].unique())
+    states_unique = list(data["State_Name"].unique())
+    campaigns_unique = list(data["Campaign"].unique())
     
     # Filters
     st.markdown("**Filters**")
@@ -50,27 +56,27 @@ def main_dashboard():
     with col01:
         date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
     with col02:
-        channels = st.multiselect("Select Channel(s)", options=["All"] + list(data["Channel_Non_Truth"].unique()), default=["All"])
+        selected_channels = [channel for channel in channels_unique if st.checkbox(channel, key=channel)]
+        if not selected_channels:  # If nothing is selected, select all
+            selected_channels = channels_unique
     with col03:
-        types = st.multiselect("Select Type(s)", options=["All"] + list(data["Type"].unique()), default=["All"])
+        selected_types = [type for type in types_unique if st.checkbox(type, key=type)]
+        if not selected_types:
+            selected_types = types_unique
     with col04:
-        states = st.multiselect("Select State(s)", options=["All"] + list(data["State_Name"].unique()), default=["All"])
+        selected_states = [state for state in states_unique if st.checkbox(state, key=state)]
+        if not selected_states:
+            selected_states = states_unique    
     with col05:
-        campaigns = st.multiselect("Select Campaign(s)", options=["All"] + list(data["Campaign"].unique()), default=["All"])
-
+        selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(campaign, key=campaign)]
+        if not selected_campaigns:
+            selected_campaigns = campaigns_unique
     
     ##### Modify Data Based on Filters #####
-    if "All" not in channels:
-        data = data[data['Channel_Non_Truth'].isin(channels)]
-
-    if "All" not in types:
-        data = data[data['Type'].isin(types)]
-
-    if "All" not in states:
-        data = data[data['State_Name'].isin(states)]
-
-    if "All" not in campaigns:
-        data = data[data['Campaign'].isin(campaigns)]
+    data = data[data['Channel_Non_Truth'].isin(selected_channels)]
+    data = data[data['Type'].isin(selected_types)]
+    data = data[data['State_Name'].isin(selected_states)]
+    data = data[data['Campaign'].isin(selected_campaigns)]
 
     data = data[(data['Date'] >= date_range[0]) & (data['Date'] <= date_range[1])]
     
