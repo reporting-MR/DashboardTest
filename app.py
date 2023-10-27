@@ -56,9 +56,10 @@ def main_dashboard():
     with col01:
         date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
     with col02:
-        selected_channels = [channel for channel in channels_unique if st.checkbox(channel, key=channel)]
-        if not selected_channels:  # If nothing is selected, select all
-            selected_channels = channels_unique
+        with st.beta_expander("Select Campaigns"):
+            selected_channels = [channel for channel in channels_unique if st.checkbox(channel, key=channel)]
+            if not selected_channels:  # If nothing is selected, select all
+                selected_channels = channels_unique
     with col03:
         selected_types = [type for type in types_unique if st.checkbox(type, key="type_" + type)]
         if not selected_types:
