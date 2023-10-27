@@ -60,7 +60,7 @@ def main_dashboard():
         if not selected_channels:  # If nothing is selected, select all
             selected_channels = channels_unique
     with col03:
-        selected_types = [type for type in types_unique if st.checkbox(type, key=type)]
+        selected_types = [type for type in types_unique if st.checkbox(type, key="type_" + type)]
         if not selected_types:
             selected_types = types_unique
     with col04:
