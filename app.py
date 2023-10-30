@@ -42,8 +42,6 @@ def main_dashboard():
     query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date >= "2023-10-01" AND Date <= "2023-10-31"'''
     data = pandas.read_gbq(query, credentials=credentials)
 
-    #Channel_Non_Truth
-
     # Assuming you have the following unique values lists for your filters:
     channels_unique = list(data["Channel_Non_Truth"].unique())
     types_unique = list(data["Type"].unique())
@@ -57,29 +55,31 @@ def main_dashboard():
     with col02:
         with st.expander("Filter Channel"):
             selected_channels = [channel for channel in channels_unique if st.checkbox(channel, value=True, key=channel)]
-            if not selected_channels:  # If nothing is selected, select all
-                selected_channels = channels_unique
     with col03:
         with st.expander("Filter Types"):
             selected_types = [type for type in types_unique if st.checkbox(type, value=True, key="type_" + type)]
-            if not selected_types:
-                selected_types = types_unique
     with col04:
         with st.expander("Filter States"):
-            selected_states = [state for state in states_unique if st.checkbox(state, value=True, key=state)]
-            if not selected_states:
-                selected_states = states_unique    
+            selected_states = [state for state in states_unique if st.checkbox(state, value=True, key=state)]  
     with col05:
         with st.expander("Filter Campaigns"):
             selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(str(campaign), value=True, key=str(campaign))]
-            if not selected_campaigns:
-                selected_campaigns = campaigns_unique
     
-    ##### Modify Data Based on Filters #####
-    data = data[data['Channel_Non_Truth'].isin(selected_channels)]
-    data = data[data['Type'].isin(selected_types)]
-    data = data[data['State_Name'].isin(selected_states)]
-    data = data[data['Campaign'].isin(selected_campaigns)]
+    # Store the filter values in the session state
+    st.session_state.selected_channels = selected_channels
+    st.session_state.selected_types = selected_types
+    st.session_state.selected_states = selected_states
+    st.session_state.selected_campaigns = selected_campaigns
+    st.session_state.date_range = date_range
+    
+    # Re-run button
+    if st.button("Re-run"):
+        # Fetch filter values from the session state
+        selected_channels = st.session_state.selected_channels
+        selected_types = st.session_state.selected_types
+        selected_states = st.session_state.selected_states
+        selected_campaigns = st.session_state.selected_campaigns
+        date_range = st.session_state.date_range
 
     data = data[(data['Date'] >= date_range[0]) & (data['Date'] <= date_range[1])]
     
