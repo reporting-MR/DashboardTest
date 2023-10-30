@@ -42,44 +42,49 @@ def main_dashboard():
     query = '''SELECT * FROM `sunpower-375201.sunpower_agg.sunpower_full_funnel` WHERE Date >= "2023-10-01" AND Date <= "2023-10-31"'''
     data = pandas.read_gbq(query, credentials=credentials)
 
-    # Assuming you have the following unique values lists for your filters:
+        # Assuming you have the following unique values lists for your filters:
     channels_unique = list(data["Channel_Non_Truth"].unique())
     types_unique = list(data["Type"].unique())
     states_unique = list(data["State_Name"].unique())
     campaigns_unique = list(data["Campaign"].unique())
-    
-    # Filters
+
+    # Initialize session state variables for filters if they don't exist
+    if 'selected_channels' not in st.session_state:
+        st.session_state.selected_channels = channels_unique
+    if 'selected_types' not in st.session_state:
+        st.session_state.selected_types = types_unique
+    if 'selected_states' not in st.session_state:
+        st.session_state.selected_states = states_unique
+    if 'selected_campaigns' not in st.session_state:
+        st.session_state.selected_campaigns = campaigns_unique
+    if 'date_range' not in st.session_state:
+        st.session_state.date_range = [data['Date'].min(), data['Date'].max()]
+
+    # Filters using session state values
     st.markdown("**Filters**")
-    date_range = st.date_input('Date Range', [data['Date'].min(), data['Date'].max()])
+    date_range = st.date_input('Date Range', st.session_state.date_range)
     col02, col03, col04, col05 = st.columns(4)
     with col02:
         with st.expander("Filter Channel"):
-            selected_channels = [channel for channel in channels_unique if st.checkbox(channel, value=True, key=channel)]
+            selected_channels = [channel for channel in channels_unique if st.checkbox(channel, value=(channel in st.session_state.selected_channels), key=channel)]
     with col03:
         with st.expander("Filter Types"):
-            selected_types = [type for type in types_unique if st.checkbox(type, value=True, key="type_" + type)]
+            selected_types = [type for type in types_unique if st.checkbox(type, value=(type in st.session_state.selected_types), key="type_" + type)]
     with col04:
         with st.expander("Filter States"):
-            selected_states = [state for state in states_unique if st.checkbox(state, value=True, key=state)]  
+            selected_states = [state for state in states_unique if st.checkbox(state, value=(state in st.session_state.selected_states), key=state)]  
     with col05:
         with st.expander("Filter Campaigns"):
-            selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(str(campaign), value=True, key=str(campaign))]
-    
-    # Store the filter values in the session state
-    st.session_state.selected_channels = selected_channels
-    st.session_state.selected_types = selected_types
-    st.session_state.selected_states = selected_states
-    st.session_state.selected_campaigns = selected_campaigns
-    st.session_state.date_range = date_range
-    
+            selected_campaigns = [campaign for campaign in campaigns_unique if st.checkbox(str(campaign), value=(campaign in st.session_state.selected_campaigns), key=str(campaign))]
+
     # Re-run button
     if st.button("Re-run"):
-        # Fetch filter values from the session state
-        selected_channels = st.session_state.selected_channels
-        selected_types = st.session_state.selected_types
-        selected_states = st.session_state.selected_states
-        selected_campaigns = st.session_state.selected_campaigns
-        date_range = st.session_state.date_range
+        # Update session state variables with current filter values
+        st.session_state.selected_channels = selected_channels
+        st.session_state.selected_types = selected_types
+        st.session_state.selected_states = selected_states
+        st.session_state.selected_campaigns = selected_campaigns
+        st.session_state.date_range = date_range
 
     data = data[(data['Date'] >= date_range[0]) & (data['Date'] <= date_range[1])]
     
